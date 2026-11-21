@@ -1,0 +1,424 @@
+
+<!doctype html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="./src/output.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+</head>
+
+<body>
+
+    <div class="flex min-h-screen bg-[#EEEBE6]">
+
+        <!-- 側欄 -->
+        <aside class="hidden lg:flex flex-col items-center shrink-0 w-60 pt-10
+            bg-white rounded-r-3xl border border-gray-200 shadow-lg"> <!--shrink-0死守自己原本設定的寬度或高度 -->
+
+            <!-- 標題 -->
+            <p class="font-bold text-2xl xl:text-3xl whitespace-nowrap">資產儀表板</p>
+            
+
+            <!-- 選單 -->
+            <nav class="w-full px-3 mt-8  ">
+                <a href="#" class="flex items-center px-4 py-3 text-lg xl:text-xl rounded-xl 
+                   hover:bg-[#EEEBE6] hover:scale-105 transition-all ">
+                   <!--transition-all  duration-200 
+                   讓元素的所有樣式變化，都以 0.2 秒（200 毫秒）的平滑過渡動畫呈現-->
+                    <i data-lucide="layout-dashboard" class="w-6 h-6 shrink-0"></i>
+                    總覽
+                </a>
+
+                <a href="#" class="flex items-center px-4 py-3 text-lg xl:text-xl rounded-xl 
+                   hover:bg-[#EEEBE6] hover:scale-105 transition-all ">
+                    <i data-lucide="wallet" class="w-6 h-6 shrink-0"></i>
+                    存款
+                </a>
+
+                <a href="#" class="flex items-center px-4 py-3 text-lg xl:text-xl rounded-xl 
+                   hover:bg-[#EEEBE6] hover:scale-105 transition-all ">
+                    <i data-lucide="chart-no-axes-combined" class="w-6 h-6 shrink-0"></i>
+                    證券
+                </a>
+
+               <a href="#" class="flex items-center px-4 py-3 text-lg xl:text-xl rounded-xl 
+                   hover:bg-[#EEEBE6] hover:scale-105 transition-all ">
+                    <i data-lucide="house" class="w-6 h-6 shrink-0"></i>
+                    房屋貸款
+                </a>
+            </nav>
+        </aside>
+
+        <!-- 主內容 -->
+        <main class="p-3 sm:p-5 md:p-6 lg:p-8 xl:p-10">
+
+            <!-- 內容grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-4 md:gap-5
+            ">
+
+
+                <!-- 證券總市值 -->
+                <section class="
+                    min-w-0
+                    w-full
+                    bg-white
+                    rounded-2xl
+                    shadow-lg
+                    p-4
+                    sm:p-5
+                    md:p-6
+                    flex flex-col justify-center
+                ">
+
+                    <p class="
+                        text-lg
+                        sm:text-xl
+                        md:text-2xl
+                        font-medium
+                        text-[#64817B]
+                    ">
+                        證券總市值
+                    </p>
+
+                    <p class="
+                        text-3xl
+                        sm:text-4xl
+                        xl:text-5xl
+                        font-bold
+                        mt-2
+                        text-[#2F6B63]
+                        tracking-tight
+                        break-words
+                    ">
+                        1,410,000
+                    </p>
+
+                    <p class="
+                        text-base
+                        sm:text-lg
+                        mt-2
+                    ">
+                        今日 +9,000
+                    </p>
+
+                </section>
+
+
+                <!-- 收盤價更新 -->
+                <section class="
+                    min-w-0
+                    w-full
+                    bg-white
+                    rounded-2xl
+                    shadow-lg
+                    p-4
+                    sm:p-5
+                    md:p-6
+                    flex flex-col justify-center
+                ">
+
+                    <p class="
+                        text-lg
+                        sm:text-xl
+                        md:text-2xl
+                        font-medium
+                        text-[#64817B]
+                    ">
+                        收盤價更新
+                    </p>
+
+                    <p class="
+                        text-xl
+                        sm:text-2xl
+                        md:text-3xl
+                        font-bold
+                        mt-4
+                        break-words
+                        text-[#2F6B63]
+                    ">
+                        已自動更新：
+                        2026-11-12 收盤價
+                    </p>
+
+                </section>
+
+                <!-- 第三區塊：持股分布 -->
+                <section class="
+                    min-w-0
+                    w-full
+                    bg-white
+                    rounded-2xl
+                    shadow-lg
+                    p-4
+                    sm:p-6
+                    min-h-64
+                ">
+
+                    <!-- 標題 -->
+                    <h2 class="text-xl sm:text-2xl font-bold text-[#2F6B63] mb-4">
+                        持股分布
+                    </h2>
+
+                    <!-- 圓餅圖 -->
+                    <div class="w-full max-w-md mx-auto">
+                        <canvas id="stockPieChart"></canvas>
+                    </div>
+
+                </section>
+
+
+                <!-- 第四區塊：我的持有股票 -->
+                <section class="
+                    min-w-0
+                    w-full
+                    bg-white
+                    rounded-2xl
+                    shadow-lg
+                    p-4
+                    sm:p-6
+                ">
+
+                    <!-- 標題列 -->
+         
+                    <div class="flex justify-between items-center mb-5">
+
+                        <h2 class="text-xl sm:text-2xl font-bold text-[#2F6B63]">
+                            我的持有股票
+                        </h2>
+
+                        <button class="
+                            bg-[#2F6B63]
+                            text-white
+                            px-4 py-2
+                            rounded-xl
+                            hover:bg-[#24554F]
+                            transition
+                            whitespace-nowrap
+                        ">
+                            + 新增股票
+                        </button>
+
+                    </div>
+
+
+                    <!-- 股票表格容器 -->
+                    <div style="width: 100%; overflow-x: auto;">
+
+                        <table style="
+                            width: 760px;
+                            table-layout: fixed;
+                            border-collapse: collapse;
+                            text-align: left;
+                            font-size: 14px;
+                        ">
+                            <colgroup>
+                                <col style="width: 18%;">
+                                <col style="width: 14%;">
+                                <col style="width: 14%;">
+                                <col style="width: 14%;">
+                                <col style="width: 20%;">
+                                <col style="width: 20%;">
+                            </colgroup>
+
+                            <!-- 表格標題 -->
+                            <thead>
+
+                                <tr class="border-b border-gray-200 text-gray-500">
+
+                                    <th  class="px-3 py-4 whitespace-nowrap">
+                                        股票
+                                    </th>
+
+                                    <th  class="px-3 py-4 whitespace-nowrap">
+                                        持有股數
+                                    </th>
+
+                                    <th  class="px-3 py-4 whitespace-nowrap">
+                                        平均成本
+                                    </th>
+
+                                    <th  class="px-3 py-4 whitespace-nowrap">
+                                        目前股價
+                                    </th>
+
+                                    <th  class="px-3 py-4 whitespace-nowrap">
+                                        持有市值
+                                    </th>
+
+                                    <th  class="px-3 py-4 whitespace-nowrap">
+                                        未實現損益
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <!-- 股票資料 -->
+                            <tbody>
+
+                                <!-- 台積電 -->
+                                <tr class="
+                                    border-b
+                                    border-gray-100
+                                    hover:bg-[#F8F7F4]
+                                    transition
+                                ">
+
+                                    <td class="px-3 py-4">
+
+                                        <div class="flex flex-col gap-1 min-w-[100px]">
+
+                                            <span class="font-bold text-gray-800 whitespace-nowrap">
+                                                台積電
+                                            </span>
+
+                                            <span class="text-sm text-gray-500">
+                                                2330
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td class="px-3 py-4 whitespace-nowrap">
+                                        100 股
+                                    </td>
+
+                                    <td class="px-3 py-4 whitespace-nowrap">
+                                        $950
+                                    </td>
+
+                                    <td class="px-3 py-4 whitespace-nowrap">
+                                        $1,000
+                                    </td>
+
+                                    <td class="px-3 py-4 font-medium whitespace-nowrap">
+                                        $100,000
+                                    </td>
+
+                                    <td class="px-3 py-4 text-green-600 font-medium whitespace-nowrap">
+                                        +$5,000
+                                    </td>
+
+                                </tr>
+
+
+                                <!-- 鴻海 -->
+                                <tr class="
+                                    border-b
+                                    border-gray-100
+                                    hover:bg-[#F8F7F4]
+                                    transition
+                                ">
+
+                                    <td class="px-3 py-4">
+
+
+                                        <div class="flex flex-col gap-1 min-w-[100px]">
+
+                                            <span class="font-bold text-gray-800 whitespace-nowrap">
+                                                鴻海
+                                            </span>
+
+                                            <span class="text-sm text-gray-500">
+                                                2317
+                                            </span>
+
+                                        </div>
+                                    </td>
+
+                                    <td class="px-3 py-4 whitespace-nowrap">
+                                        200 股
+                                    </td>
+
+                                    <td class="px-3 py-4 whitespace-nowrap">
+                                        $150
+                                    </td>
+
+                                    <td class="px-3 py-4 whitespace-nowrap">
+                                        $160
+                                    </td>
+
+                                    <td class="px-3 py-4 font-medium whitespace-nowrap">
+                                        $32,000
+                                    </td>
+
+                                    <td class="px-3 py-4 text-green-600 font-medium whitespace-nowrap">
+                                        +$2,000
+                                    </td>
+
+                                </tr>
+
+
+                                <!-- 0050 -->
+                                <tr class="
+                                    border-b
+                                    border-gray-100
+                                    hover:bg-[#F8F7F4]
+                                    transition
+                                ">
+
+                                    <td class="px-3 py-4">
+                                        <div class="flex flex-col gap-1 min-w-[100px]">
+
+                                            <span class="font-bold text-gray-800 whitespace-nowrap">
+                                                元大台灣50
+                                            </span>
+
+                                            <span class="text-sm text-gray-500">
+                                                0050
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td class="px-3 py-4 whitespace-nowrap">
+                                        300 股
+                                    </td>
+
+                                    <td class="px-3 py-4 whitespace-nowrap">
+                                        $180
+                                    </td>
+
+                                    <td class="px-3 py-4 whitespace-nowrap">
+                                        $185
+                                    </td>
+
+                                    <td class="px-3 py-4 font-medium whitespace-nowrap">
+                                        $55,500
+                                    </td>
+
+                                    <td class="px-3 py-4 text-green-600 font-medium whitespace-nowrap">
+                                        +$1,500
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+        <!-- 載入 Chart.js -->
+    
+
+</body>
+</html>

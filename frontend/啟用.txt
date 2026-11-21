@@ -1,0 +1,5 @@
+cd /workspaces/stock/frontend
+npm run watch:css
+
+cd /workspaces/stock/frontend
+npm run dev
